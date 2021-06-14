@@ -5,43 +5,31 @@ const bodyParser = require("body-parser");
 const ejsLint = require('ejs-lint');
 
 const app = express();
+app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
 
+var items = [];
 app.get("/", function(req, res) {
   var today = new Date();
-  var currDay = today.getDay();
-  var day = "";
 
-  switch (currDay) {
-    case 1:
-      day = "Monday";
-      break;
-    case 2:
-      day = "Tuesday";
-      break;
-    case 3:
-      day = "Wednesday";
-      break;
-    case 4:
-      day = "Thursday";
-      break;
-    case 5:
-      day = "Friday";
-      break;
-    case 6:
-      day = "Saturday";
-      break;
-    case 0:
-      day = "Sunday";
-      break;
-    default:
-      console.log("Error with day " + currDay);
-
+  options = {
+    weekday: "long",
+    day: "2-digit",
+    month: "long",
   }
+  var day = today.toLocaleDateString("en-US", options);
+
   res.render("lists", {
-    day: day
+    day: day,
+    newItem: items
   });
 });
+
+app.post("/",function(req,res) {
+  var item = req.body.item;
+  items.push(item);
+  res.redirect("/");
+})
 
 app.listen(3000, function() {
   console.log("Server started on port 3000.");
