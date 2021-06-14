@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>TO-DO-List</title>
+  </head>
+  <body>
+    <% if (day === "Saturday" || day === "Sunday") { %>
+        <h1 style="color:pink"><%= day %> TO-DO List</h1>
+    <%} else {%>
+        <h1 style="color:purple"><%= day %> TO-DO List</h1>
+    <% } %>
+    <!-- <h1>It's a <%= day %>!</h1> -->
+  </body>
+</html>

@@ -18,6 +18,8 @@
   "homepage": "https://github.com/priyanshu0627/To-Do-List#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "ejs": "^3.1.6",
+    "ejs-lint": "^1.2.0",
     "express": "^4.17.1"
   }
 }
