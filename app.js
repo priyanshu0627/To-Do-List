@@ -3,23 +3,18 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejsLint = require('ejs-lint');
+const date = require(__dirname + "/date.js");
 
 const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
 app.use(express.static("public"));
 
-var items = ["GFG","WebD","Back Workout","Running"];
+let items = ["GFG","WebD","Back Workout","Running"];
+let workList = [];
+
 app.get("/", function(req, res) {
-  var today = new Date();
-
-  options = {
-    weekday: "long",
-    day: "2-digit",
-    month: "long",
-  };
-  var day = today.toLocaleDateString("en-US", options);
-
+  var day = date.getDate();
   res.render("lists", {
     day: day,
     newItem: items
@@ -27,9 +22,19 @@ app.get("/", function(req, res) {
 });
 
 app.post("/",function(req,res) {
-  var item = req.body.item;
-  items.push(item);
-  res.redirect("/");
+  // console.log(req.body);
+  if(req.body.button === "Work") {
+    workList.push(req.body.item);
+    res.redirect("/work");
+  }else {
+    let item = req.body.item;
+    items.push(item);
+    res.redirect("/");
+  }
+});
+
+app.get("/work",function(req,res) {
+  res.render("lists",{day : "Work Lists", newItem: workList});
 });
 
 app.listen(3000, function() {
